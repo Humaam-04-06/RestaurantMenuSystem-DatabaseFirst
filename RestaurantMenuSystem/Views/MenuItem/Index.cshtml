@@ -1,0 +1,47 @@
+﻿@model IEnumerable<RestaurantMenuSystem.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Restaurant Menu";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">🍽️ Restaurant Menu</h2>
+
+    <!-- Filter Buttons -->
+    <div class="mb-4 text-center">
+        <a href="/MenuItem/Index"
+               class="btn @(ViewBag.SelectedCategory == null ? "btn-dark" : "btn-outline-dark") me-2">
+            All
+        </a>
+        @foreach (var cat in ViewBag.Categories)
+        {
+            <a href="/MenuItem/Index?category=@cat"
+                   class="btn @(ViewBag.SelectedCategory == cat ? "btn-dark" : "btn-outline-dark") me-2">
+                @cat
+            </a>
+        }
+    </div>
+
+    <!-- Menu Items Cards -->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">@item.Category</span>
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text text-muted">@item.Description</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-success">Rs. @item.Price.ToString("N0")</span>
+                        <a href="/MenuItem/Details/@item.Id"
+                               class="btn btn-sm btn-dark">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
